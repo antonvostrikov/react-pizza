@@ -1,10 +1,13 @@
 import './App.css';
 import './scss/app.scss'
 
+import React from 'react';
+
 import Header from './components/Header';
-import Categories from './components/Categories'
-import Sort from './components/Sort'
-import PizzaBlock from './components/PizzaBlock';
+
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -12,12 +15,10 @@ function App() {
       <Header />
       <div className="content">
         <div className="container">
-          <Categories />
-          <Sort />
-          <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">
-            <PizzaBlock title={'Чизбургер-пицца'} price={395}/>
-          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />}/>
+          </Routes>
         </div>
       </div>
     </div>

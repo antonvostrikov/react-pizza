@@ -1,13 +1,19 @@
+import logoPizza from '../assets/img/pizza-logo.svg'
+
+import { Link } from 'react-router-dom'
+
 export default function Header() {
   return (
     <div className="header">
       <div className="container">
         <div className="header__logo">
-          <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
-          <div>
-            <h1>React Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
-          </div>
+          <Link to="/">
+            <img width="38" src={logoPizza} alt="Pizza logo" />
+            <div>
+              <h1>React Pizza</h1>
+              <p>самая вкусная пицца во вселенной</p>
+            </div>
+          </Link>
         </div>
         <div className="header__cart">
           <a href="/cart.html" className="button button--cart">
