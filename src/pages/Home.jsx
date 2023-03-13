@@ -10,11 +10,20 @@ import axios from 'axios'
 export default function Home() {
   const [pizza, setPizza] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
+  const [categoryId, setCategoryId] = React.useState(0) 
+  const [activeSort, setActiveSort] = React.useState({ title: 'популярности', sortProperty: 'rating' })
 
   React.useEffect(() => {
+    setIsLoading(true)
+
+    const category = categoryId > 0 ? `category=${categoryId}` : '';
+    const sortBy = activeSort.sortProperty.replace('-', '');
+    const order = activeSort.sortProperty.includes('-') ? 'asc' : 'desc';
+    
+
     (async () => {
       try {
-        const pizzaRequire = await axios.get('http://localhost:3001/pizzas')
+        const pizzaRequire = await axios.get(`http://localhost:3001/pizzas?${category}&_sort=${sortBy}&_order=${order}`)
         
         setIsLoading(false)
         setPizza(pizzaRequire.data)
@@ -23,13 +32,14 @@ export default function Home() {
         console.log(e)
       }
     })()
-  }, [])
+    window.scrollTo(0, 0)
+  }, [categoryId, activeSort])
 
   return (
     <>
       <div className="content__top">
-          <Categories />
-          <Sort />
+          <Categories value={categoryId} onChangeCategory={setCategoryId}/>
+          <Sort value={activeSort} onChangeSort={setActiveSort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
