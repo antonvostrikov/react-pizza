@@ -6,23 +6,29 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index'
 
 import axios from 'axios'
+import Pagination from '../components/Pagination/index'
 
-export default function Home({ searchPizza, setSearchPizza }) {
+import { PizzaContext } from '../App'
+
+export default function Home() {
   const [pizza, setPizza] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [categoryId, setCategoryId] = React.useState(0) 
   const [activeSort, setActiveSort] = React.useState({ title: 'популярности', sortProperty: 'rating' })
+  const [pageCount, setPageCount] = React.useState(1)
+
+  const { searchPizza } = React.useContext(PizzaContext)
 
   React.useEffect(() => {
     setIsLoading(true)
 
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortBy = activeSort.sortProperty.replace('-', '');
-    const order = activeSort.sortProperty.includes('-') ? 'asc' : 'desc';    
+    const order = activeSort.sortProperty.includes('-') ? 'asc' : 'desc';
 
     (async () => {
       try {
-        const pizzaRequire = await axios.get(`http://localhost:3001/pizzas?${category}&_sort=${sortBy}&_order=${order}`)
+        const pizzaRequire = await axios.get(`http://localhost:3001/pizzas?_page=${pageCount}&_limit=4&${category}&_sort=${sortBy}&_order=${order}`)
 
         setIsLoading(false)
         setPizza(pizzaRequire.data)
@@ -33,7 +39,7 @@ export default function Home({ searchPizza, setSearchPizza }) {
     })()
 
     window.scrollTo(0, 0)
-  }, [categoryId, activeSort])
+  }, [categoryId, activeSort, pageCount])
 
   const skeleton = [...Array(6)].map(( _, index) => <Skeleton key={index}/>)
   const pizzas = pizza.filter(obj => obj.name.toLowerCase().includes(searchPizza.toLowerCase())).map((item, index) => <PizzaBlock key={item.id} {...item} />)
@@ -48,6 +54,7 @@ export default function Home({ searchPizza, setSearchPizza }) {
       <div className="content__items">
         { isLoading ? skeleton : pizzas }
       </div>
+      <Pagination pageCount={pageCount} onChangePage={(number) => setPageCount(number)} />
     </>
   ) 
 }

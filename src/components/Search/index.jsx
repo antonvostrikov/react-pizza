@@ -2,8 +2,11 @@ import React from 'react'
 
 import styles from './Search.module.scss'
 
-export default function Search({ searchPizza, setSearchPizza }) {
-  
+import { PizzaContext } from '../../App'
+
+export default function Search() {
+  const { searchPizza, setSearchPizza } = React.useContext(PizzaContext)
+
   return (
     <div className={styles.root}>
       {
