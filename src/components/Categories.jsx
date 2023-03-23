@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Categories({ value, onChangeCategory }) {
 
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
