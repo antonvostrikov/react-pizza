@@ -2,6 +2,7 @@ import React from "react"
 
 export default function Sort({ value, onChangeSort }) {
   const [sortOpen, setSortOpen] = React.useState(false)
+  const sortRef = React.useRef()
 
   const list = [
     { name: 'популярности (DESC)', sortProperty: 'rating' },
@@ -13,13 +14,25 @@ export default function Sort({ value, onChangeSort }) {
   ]
 
   const onClickSort = (obj) => {
-    console.log(obj)
     onChangeSort(obj)
     setSortOpen(false)
   }
+  
+  React.useEffect(() => {
+    const sortHandleClick = (e) => {
+      if (!e.composedPath().includes(sortRef.current)) {
+        setSortOpen(false)
+      }
+    }
+
+    document.body.addEventListener('click', sortHandleClick)
+
+    return () => document.body.removeEventListener('click', sortHandleClick)
+  }, [])
+
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"

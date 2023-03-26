@@ -20,6 +20,7 @@ export default function Search() {
 
   const onClearInput = () => {
     setSearchPizza('')
+    setInputValue('')
     inputRef.current.focus()
   }
 

@@ -1,4 +1,3 @@
-import './App.css';
 import './scss/app.scss'
 
 import React from 'react';
@@ -8,6 +7,7 @@ import Header from './components/Header';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Cart from './pages/Cart';
 
 export const PizzaContext = React.createContext()
 
@@ -22,6 +22,7 @@ function App() {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home  />} />
+              <Route path="cart" element={<Cart />} />
               <Route path="*" element={<NotFound />}/>
             </Routes>
           </div>

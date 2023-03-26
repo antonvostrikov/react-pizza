@@ -107,6 +107,12 @@ body {
   }
 }
 
+.container--cart {
+  .content__items {
+    display: block;
+  }
+}
+
 .cart {
   &__top {
     display: flex;
