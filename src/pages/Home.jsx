@@ -4,22 +4,19 @@ import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index'
-
-import axios from 'axios'
 import Pagination from '../components/Pagination/index'
 
 import { PizzaContext } from '../App'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId, setActiveSort, setPageCount } from '../redux/slices/filterSlice'
+import { getPizza } from '../redux/slices/pizzaSlice'
 
 export default function Home() {
-  const [pizza, setPizza] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
   const { searchPizza } = React.useContext(PizzaContext)
 
   const {categoryId, sort, pageCount} = useSelector(state => state.filter)
+  const { items, status } = useSelector(state => state.pizza)
 
   const dispatch = useDispatch()
 
@@ -35,30 +32,21 @@ export default function Home() {
     dispatch(setPageCount(number))
   }
 
-  React.useEffect(() => {
-    setIsLoading(true)
 
+  React.useEffect(() => {
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortBy = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
 
-    (async () => {
-      try {
-        const pizzaRequire = await axios.get(`http://localhost:3001/pizzas?_page=${pageCount}&_limit=4&${category}&_sort=${sortBy}&_order=${order}`)
-
-        setIsLoading(false)
-        setPizza(pizzaRequire.data)
-        window.scrollTo(0, 0)
-      } catch (e) {
-        console.log(e)
-      }
-    })()
+    dispatch(getPizza({
+      category, sortBy, order, pageCount
+    }))
 
     window.scrollTo(0, 0)
   }, [categoryId, sort, pageCount])
 
   const skeleton = [...Array(6)].map(( _, index) => <Skeleton key={index}/>)
-  const pizzas = pizza.filter(obj => obj.name.toLowerCase().includes(searchPizza.toLowerCase())).map((item, index) => <PizzaBlock key={item.id} {...item} />)
+  const pizzas = items.filter(obj => obj.name.toLowerCase().includes(searchPizza.toLowerCase())).map((item, index) => <PizzaBlock key={item.id} {...item} />)
 
   return (
     <>
@@ -68,7 +56,7 @@ export default function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        { isLoading ? skeleton : pizzas }
+        { status === 'loading' ? skeleton : pizzas }
       </div>
       <Pagination pageCount={pageCount} onChangePage={onChangePageCount} />
     </>

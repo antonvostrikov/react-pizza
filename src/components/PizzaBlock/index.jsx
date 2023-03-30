@@ -20,7 +20,7 @@ export default function PizzaBlock({ id, name, price, imageUrl, sizes, types }) 
       name,
       price, 
       type: typesPizza[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
       imageUrl
     }
 

@@ -1,6 +1,8 @@
 import CartItem from "../components/CartItem";
 import { useSelector, useDispatch } from "react-redux";
 import { clearItems } from "../redux/slices/cartSlice";
+import CartEmpty from "../components/CartEmpty";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const dispatch = useDispatch()
@@ -8,6 +10,10 @@ export default function Cart() {
 
   const onClickClear = () => {
     dispatch(clearItems())
+  }
+
+  if (!totalPrice) {
+    return <CartEmpty />
   }
 
   return (
@@ -119,7 +125,7 @@ export default function Cart() {
                 />
               </svg>
 
-              <span>Вернуться назад</span>
+              <Link to="/"><span>Вернуться назад</span></Link>
             </a>
             <div class="button pay-btn">
               <span>Оплатить сейчас</span>

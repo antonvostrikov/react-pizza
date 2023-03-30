@@ -8,7 +8,7 @@ import Search from './Search'
 import { useSelector } from 'react-redux'
 
 export default function Header() {
-  const { items, totalPrice, totalCount } = useSelector(state => state.cart)
+  const { totalPrice, totalCount } = useSelector(state => state.cart)
 
   return (
     <div className="header">
