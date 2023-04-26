@@ -4,24 +4,26 @@ import debounce from 'lodash.debounce'
 
 import styles from './Search.module.scss'
 
-import { PizzaContext } from '../../App'
+import { setSearchPizza } from '../../redux/slices/filterSlice'
+import { useDispatch } from 'react-redux'
 
-export default function Search() {
+const Search:React.FC = () => {
   const [inputValue, setInputValue] = React.useState()
-  const { setSearchPizza } = React.useContext(PizzaContext)
-  const inputRef = React.useRef()
+  const inputRef = React.useRef<HTMLInputElement>(null)
+
+  const dispatch = useDispatch()
 
   const updateInputValue = React.useCallback(
     debounce((str) => {
-      setSearchPizza(str)
+      dispatch(setSearchPizza(str))
     }, 350),
     []
   )
 
   const onClearInput = () => {
-    setSearchPizza('')
+    dispatch(setSearchPizza(''))
     setInputValue('')
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }
 
   const onChangeInput = (e) => {
@@ -49,3 +51,5 @@ export default function Search() {
     </div>
   )
 }
+
+export default Search

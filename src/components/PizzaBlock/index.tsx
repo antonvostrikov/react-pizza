@@ -2,10 +2,20 @@ import React from "react"
 
 import { addCart } from "../../redux/slices/cartSlice"
 import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const typesPizza = ['тонкое', 'традиционное']
 
-export default function PizzaBlock({ id, name, price, imageUrl, sizes, types }) {
+interface IPizzaBlockProps {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+}
+
+const PizzaBlock:React.FC<IPizzaBlockProps> = ({ id, name, price, imageUrl, sizes, types }) => {
   const [activeType, setActiveNameType] = React.useState(0)
   const [activeSize, setActiveNameSize] = React.useState(0)
 
@@ -30,11 +40,13 @@ export default function PizzaBlock({ id, name, price, imageUrl, sizes, types }) 
   return(
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt="Pizza"
-        />
+        <Link to={`/pizza/${id}`}>
+          <img
+            className="pizza-block__image"
+            src={imageUrl}
+            alt="Pizza"
+          />
+        </Link>
         <h4 className="pizza-block__title">{name}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -75,3 +87,5 @@ export default function PizzaBlock({ id, name, price, imageUrl, sizes, types }) 
     </div>
   )
 }
+
+export default PizzaBlock

@@ -1,21 +1,17 @@
 import React from 'react'
 
 import Categories from '../components/Categories'
-import Sort from '../components/Sort'
+import Sort from '../components/Sort.tsx'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index'
 import Pagination from '../components/Pagination/index'
-
-import { PizzaContext } from '../App'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId, setActiveSort, setPageCount } from '../redux/slices/filterSlice'
 import { getPizza } from '../redux/slices/pizzaSlice'
 
 export default function Home() {
-  const { searchPizza } = React.useContext(PizzaContext)
-
-  const {categoryId, sort, pageCount} = useSelector(state => state.filter)
+  const { categoryId, sort, pageCount, searchPizza } = useSelector(state => state.filter)
   const { items, status } = useSelector(state => state.pizza)
 
   const dispatch = useDispatch()
@@ -31,7 +27,6 @@ export default function Home() {
   const onChangePageCount = (number) => {
     dispatch(setPageCount(number))
   }
-
 
   React.useEffect(() => {
     const category = categoryId > 0 ? `category=${categoryId}` : '';

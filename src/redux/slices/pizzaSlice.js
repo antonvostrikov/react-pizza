@@ -16,6 +16,7 @@ export const getPizza = createAsyncThunk(
       return data
   }
 )
+
 export const pizzaSlice = createSlice({
   name: 'pizza',
   initialState,

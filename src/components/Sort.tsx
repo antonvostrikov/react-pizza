@@ -1,10 +1,25 @@
 import React from "react"
 
-export default function Sort({ value, onChangeSort }) {
-  const [sortOpen, setSortOpen] = React.useState(false)
-  const sortRef = React.useRef()
+interface IList {
+  name: string;
+  sortProperty: string;
+}
 
-  const list = [
+interface IValue {
+  name: string;
+  sortProperty: string;
+}
+
+interface ISortProps {
+  value: IValue;
+  onChangeSort: any;
+}
+
+const Sort:React.FC<ISortProps> = ({ value, onChangeSort }) => {
+  const [sortOpen, setSortOpen] = React.useState(false)
+  const sortRef = React.useRef<HTMLDivElement>(null)
+
+  const list:IList[] = [
     { name: 'популярности (DESC)', sortProperty: 'rating' },
     { name: 'популярности (ASC)', sortProperty: '-rating' },
     { name: 'цене (DESC)', sortProperty: 'price' },
@@ -13,14 +28,14 @@ export default function Sort({ value, onChangeSort }) {
     { name: 'алфавиту (ASC)', sortProperty: '-title' }
   ]
 
-  const onClickSort = (obj) => {
+  const onClickSort = (obj:IList) => {
     onChangeSort(obj)
     setSortOpen(false)
   }
   
   React.useEffect(() => {
-    const sortHandleClick = (e) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const sortHandleClick = (e:any) => {
+      if (!e.path.includes(sortRef.current)) {
         setSortOpen(false)
       }
     }
@@ -63,3 +78,5 @@ export default function Sort({ value, onChangeSort }) {
     </div>
   )
 }
+
+export default Sort

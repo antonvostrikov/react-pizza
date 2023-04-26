@@ -2,13 +2,15 @@ import React from 'react'
 
 import logoPizza from '../assets/img/pizza-logo.svg'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Search from './Search'
 
 import { useSelector } from 'react-redux'
 
 export default function Header() {
   const { totalPrice, totalCount } = useSelector(state => state.cart)
+
+  const { pathname } = useLocation()
 
   return (
     <div className="header">
@@ -24,8 +26,8 @@ export default function Header() {
         </div>
         <Search />
         <div className="header__cart">
-          <Link to="/cart">
-            <a href="/cart.html" className="button button--cart">
+          { pathname !== '/cart' &&  
+            <Link to="/cart" className="button button--cart">
               <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
               <svg
@@ -58,8 +60,8 @@ export default function Header() {
                 />
               </svg>
               <span>{totalCount}</span>
-            </a>
-          </Link>
+            </Link>
+          }
         </div>
       </div>
     </div>
