@@ -34,7 +34,7 @@ const Sort:React.FC<ISortProps> = ({ value, onChangeSort }) => {
   }
   
   React.useEffect(() => {
-    const sortHandleClick = (e:any) => {
+    const sortHandleClick = (e: MouseEvent) => {
       if (!e.path.includes(sortRef.current)) {
         setSortOpen(false)
       }

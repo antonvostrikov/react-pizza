@@ -7,8 +7,8 @@ import styles from './Search.module.scss'
 import { setSearchPizza } from '../../redux/slices/filterSlice'
 import { useDispatch } from 'react-redux'
 
-const Search:React.FC = () => {
-  const [inputValue, setInputValue] = React.useState()
+const Search: React.FC = () => {
+  const [inputValue, setInputValue] = React.useState<string>()
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ const Search:React.FC = () => {
     inputRef.current?.focus()
   }
 
-  const onChangeInput = (e) => {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
     updateInputValue(e.target.value)
   }

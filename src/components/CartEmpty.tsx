@@ -10,11 +10,9 @@ export default function CartEmpty() {
         Для того, чтобы заказать пиццу, перейди на главную страницу.
       </p>
       <img src={cartEmptyImage} alt="Empty cart" />
-      <Link to="/">
-        <a href="/" className="button button--black">
+        <Link to="/" className="button button--black">
           <span>Вернуться назад</span>
-        </a>
-      </Link>
+        </Link>
     </div>
   )
 }

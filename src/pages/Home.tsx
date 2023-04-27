@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Categories from '../components/Categories'
-import Sort from '../components/Sort.tsx'
+import Sort from '../components/Sort'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock/index'
 import Pagination from '../components/Pagination/index'
@@ -10,21 +10,21 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId, setActiveSort, setPageCount } from '../redux/slices/filterSlice'
 import { getPizza } from '../redux/slices/pizzaSlice'
 
-export default function Home() {
+const Home: React.FC = () => {
   const { categoryId, sort, pageCount, searchPizza } = useSelector(state => state.filter)
   const { items, status } = useSelector(state => state.pizza)
 
   const dispatch = useDispatch()
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id))
   }
 
-  const onChangeSort = (obj) => {
+  const onChangeSort = (obj: Object) => {
     dispatch(setActiveSort(obj))
   }
 
-  const onChangePageCount = (number) => {
+  const onChangePageCount = (number: number) => {
     dispatch(setPageCount(number))
   }
 
@@ -57,3 +57,5 @@ export default function Home() {
     </>
   ) 
 }
+
+export default Home

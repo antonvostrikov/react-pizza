@@ -2,13 +2,12 @@ import React from "react";
 
 interface ICategoriesProps {
   value: number;
-  onChangeCategory: any;
+  onChangeCategory: (index: number) => void;
 }
 
+const categories:string[] = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
+
 const Categories:React.FC<ICategoriesProps> = ({ value, onChangeCategory }) => {
-
-  const categories:string[] = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
-
   return (
     <div className="categories">
       <ul>
